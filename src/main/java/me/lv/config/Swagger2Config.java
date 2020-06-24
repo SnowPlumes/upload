@@ -1,4 +1,4 @@
-package me.lv;
+package me.lv.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

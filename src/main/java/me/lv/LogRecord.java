@@ -27,10 +27,10 @@ public class LogRecord {
     private Logger logger = LoggerFactory.getLogger(LogRecord.class);
 
     @Pointcut("execution(* me.lv.controller.*Controller.*(..))")
-    public void excudeService() {
+    public void executeService() {
     }
 
-    @Around("excudeService()")
+    @Around("executeService()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;

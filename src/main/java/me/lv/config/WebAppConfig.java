@@ -1,4 +1,4 @@
-package me.lv;
+package me.lv.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
