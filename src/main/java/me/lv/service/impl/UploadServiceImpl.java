@@ -81,20 +81,4 @@ public class UploadServiceImpl implements UploadService {
                 header.lastIndexOf("\""));
         return fileName;
     }
-
-    private void writeTo(String fileName, Part part) throws FileNotFoundException, IOException {
-        String uploadPath = "D:/file/";
-        part.write(uploadPath + File.separator + fileName);
-        /***
-         InputStream in = part.getInputStream();
-         OutputStream out = new FileOutputStream("c:/workspace" + fileName);
-         byte[] buffer = new byte[1024];
-         int length = -1;
-         while ((length = in.read(buffer)) != -1) {
-         out.write(buffer, 0, length);
-         }
-         in.close();
-         out.close();
-         ***/
-    }
 }
