@@ -25,7 +25,7 @@ import javax.servlet.http.Part;
 @RestController
 @RequestMapping("upload")
 public class UploadController {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
     @Autowired
     private UploadService uploadService;
 

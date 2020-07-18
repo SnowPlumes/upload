@@ -8,8 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Part;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,24 +28,20 @@ public class UploadServiceImpl implements UploadService {
         String webPath = "";
         if (!file.isEmpty()) {
             if (file.getContentType().contains("image")) {
-                // 获取图片的文件名
                 String fileName = file.getOriginalFilename();
-                // 获取图片的扩展名
                 String extensionName = StringUtils.substringAfter(fileName, ".");
-                // 新的图片文件名 = 获取时间戳+"."图片扩展名
-                String newFileName = String.valueOf(System.currentTimeMillis()) + "." + extensionName;
+                String newFileName = System.currentTimeMillis() + "." + extensionName;
 
                 String dataStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
 
-                // 文件路径
                 String filePath = basePath + dataStr + "/";
                 webPath += serverPath + dataStr + "/" + newFileName;
                 File dest = new File(filePath, newFileName);
                 if (!dest.getParentFile().exists()) {
-                    dest.getParentFile().mkdirs();
+                    if(dest.getParentFile().mkdirs()) {
+                        file.transferTo(dest);
+                    }
                 }
-                // 上传到指定目录
-                file.transferTo(dest);
             }
         }
         return webPath;
@@ -59,26 +53,25 @@ public class UploadServiceImpl implements UploadService {
         String dataStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String fileName = getFileName(part);
 
-        // 获取图片的扩展名
         String extensionName = StringUtils.substringAfter(fileName, ".");
-        // 新的图片文件名 = 获取时间戳+"."图片扩展名
-        String newFileName = String.valueOf(System.currentTimeMillis()) + "." + extensionName;
+        String newFileName = System.currentTimeMillis() + "." + extensionName;
 
         // 文件路径
         String filePath = basePath + dataStr + "/";
         File file = new File(filePath);
         if (!file.exists()) {
-            file.mkdirs();
+            if (file.mkdirs()) {
+                part.write(filePath + File.separator + newFileName);
+                webPath += serverPath + dataStr + "/" + newFileName;
+            }
         }
-        part.write(filePath + File.separator + newFileName);
-        webPath += serverPath + dataStr + "/" + newFileName;
+
         return webPath;
     }
 
     private String getFileName(Part part) {
         String header = part.getHeader("Content-Disposition");
-        String fileName = header.substring(header.indexOf("filename=\"") + 10,
+        return header.substring(header.indexOf("filename=\"") + 10,
                 header.lastIndexOf("\""));
-        return fileName;
     }
 }
