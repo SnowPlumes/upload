@@ -24,7 +24,7 @@ import java.util.Date;
 @Aspect
 @Configuration
 public class LogRecord {
-    private Logger logger = LoggerFactory.getLogger(LogRecord.class);
+    private static final Logger logger = LoggerFactory.getLogger(LogRecord.class);
 
     @Pointcut("execution(* me.lv.controller.*Controller.*(..))")
     public void executeService() {

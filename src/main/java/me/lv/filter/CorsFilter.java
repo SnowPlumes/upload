@@ -22,7 +22,7 @@ import java.io.IOException;
 @Order(value = 1)
 public class CorsFilter implements Filter {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(CorsFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
