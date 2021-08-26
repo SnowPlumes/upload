@@ -1,17 +1,17 @@
 package me.lv.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import me.lv.config.WhiteConfig;
 import me.lv.constants.ResponseConstants;
 import me.lv.dto.JsonResponse;
 import me.lv.service.UploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +24,13 @@ import javax.servlet.http.Part;
 @Api(value = "逗比")
 @RestController
 @RequestMapping("upload")
+@Slf4j
 public class UploadController {
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
     @Autowired
     private UploadService uploadService;
+    @Autowired
+    private WhiteConfig whiteConfig;
 
     @ApiOperation(value = "上传图片(payload)")
     @PostMapping(value = "uploadPicture")
@@ -60,5 +63,10 @@ public class UploadController {
             logger.error(">>>>>>>> upload error:", e);
         }
         return json;
+    }
+
+    @GetMapping("test")
+    public void test() {
+        log.info("white = {}", JSON.toJSONString(whiteConfig.getIp()));
     }
 }

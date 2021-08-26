@@ -1,0 +1,14 @@
+server:
+  port: 8088
+
+
+upload:
+  location: /data/file/
+#upload.location=D://file/
+  maxFileSize: 10240KB
+  maxRequestSize: 102400KB
+  server:
+    path: http://8.9.36.233/
+
+white:
+  ip: 1.1.1.1,2.2.2.2,3.3.3.3

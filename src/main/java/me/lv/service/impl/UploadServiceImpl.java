@@ -65,7 +65,6 @@ public class UploadServiceImpl implements UploadService {
                 webPath += serverPath + dataStr + "/" + newFileName;
             }
         }
-
         return webPath;
     }
 
